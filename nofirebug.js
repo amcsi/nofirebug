@@ -1,9 +1,10 @@
+// vim: set tabstop=4 softtabstop=4 noexpandtab :
 /**
  * Visit https://github.com/amcsi/nofirebug.js
  *
  * @license     MIT License; http://www.opensource.org/licenses/mit-license.php
  * @author      Attila Szeremi
- * @version     1.0
+ * @version     1.1
  **/
 (function () {
 	var consoleProperties = ['log', 'debug', 'info', 'warn', 'error', 'group', 'count'];
@@ -16,7 +17,8 @@
 	if ('undefined' == typeof window.console) {
 		window.console = {};
 	}
-	if ('undefined' == typeof window.Console) {
+	window.Console = window.console;
+	if (!window.debug) {
 		window.Console = {};
 	}
 	console = window.console;
@@ -28,9 +30,8 @@
 		if ('function' != typeof console[prop]) {
 			console[prop] = emptyFn;
 		}
-		Console[prop] = emptyFn;
-		if (window.debug) {
-			Console[prop] = console[prop];
+		if (!window.debug) {
+			Console[prop] = emptyFn;
 		}	
 	}
 })();
